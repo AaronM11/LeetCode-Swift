@@ -198,7 +198,23 @@ func generate(_ numRows: Int) -> [[Int]] {
     return rows
 }
 
-
-
+// Problem: Two sum. Given an array of integers, return indices of the two numebrs such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not user the same element twice.
+// Eample. given nums = [2, 7, 11, 15], target = 9 return [0,1] because nums[0] + nums[1] = 9
+func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+    var dict = Dictionary<Int, Int>()
+    var components = [Int]()
+    
+    for (index, num) in nums.enumerated() {
+        let complement = target - num
+        
+        if let complementIndex = dict[complement] {
+            components.append(complementIndex)
+            components.append(index)
+        }
+        dict[num] = index
+    }
+    
+    return components
+}
 
 
