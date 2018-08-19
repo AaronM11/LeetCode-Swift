@@ -172,7 +172,31 @@ func climbStairs(_ n: Int) -> Int {
     return dpArray[0]
 }
 
+// Problem: Pascals Triangle. Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+func generate(_ numRows: Int) -> [[Int]] {
+    if numRows == 0 {
+        return []
+    }
+    var rows = [[Int]]()
+    rows.append([1])
 
+    for i in 1..<numRows {
+        rows.append([])
+        for j in 0...i {
+            let previous = rows[i-1]
+            var current = 0
+            if j < previous.count {
+                current += previous[j]
+            }
+            if j - 1 >= 0 {
+                current += previous[j-1]
+            }
+            rows[i].append(current)
+        }
+
+    }
+    return rows
+}
 
 
 
