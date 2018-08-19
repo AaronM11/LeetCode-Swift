@@ -119,10 +119,10 @@ func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     return dummyHead.next
 }
 
-let merged = mergeTwoLists(listOne, listTwo)
-printList(merged)
+//let merged = mergeTwoLists(listOne, listTwo)
+//printList(merged)
 
-// Return all root to leaf paths of a binary tree. Example.
+// Problem: Return all root to leaf paths of a binary tree. Example.
 //         1
 //        / \
 //       2   3
@@ -135,6 +135,7 @@ func binaryTreePaths(_ root: TreeNode?) -> [String] {
     return paths
 }
 
+// For those who had to look it up like me. the `inout` keyword will allow you to modify the parameter.
 func binaryTreePathsHelper(_ node: TreeNode?, path: String, paths: inout [String]) {
     guard let current = node else { return }
     let currentPath = "\(path)\(current.val)"
@@ -147,5 +148,33 @@ func binaryTreePathsHelper(_ node: TreeNode?, path: String, paths: inout [String
     binaryTreePathsHelper(current.left, path: currentPath + "->", paths: &paths)
     binaryTreePathsHelper(current.right, path: currentPath + "->", paths: &paths)
 }
+
+// Problem: You are climbing a staircase. It takes n steps to reach to the top.
+// Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+// Node: Given n will be a positive integer.
+func climbStairs(_ n: Int) -> Int {
+    //Think about this problem in steps
+    // This numbers of ways to get to n steps is the number of ways to get to n - 1 plus the number of ways to get to n - 2 steps since
+    // those are the sumer of steps we can take. We also know. That there is 1 way to get to 1 step. and 2 ways to get to 2 steps. so we can see this is similar to the fibonacci sequence.
+    if n <= 2 {
+        return n
+    }
+    
+    var dpArray = Array(repeating: 0, count: 2)
+    dpArray[0] = 2
+    dpArray[1] = 1
+    
+    for _ in 3...n {
+        let current = dpArray[0] + dpArray[1]
+        dpArray[1] = dpArray[0]
+        dpArray[0] = current
+    }
+    return dpArray[0]
+}
+
+
+
+
+
 
 
