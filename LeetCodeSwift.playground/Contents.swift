@@ -228,4 +228,42 @@ func strStr(_ haystack: String, _ needle: String) -> Int {
     return -1
 }
 
+// Problem: Implement int sqrt(int x) https://leetcode.com/problems/sqrtx/description/
+func mySqrt(_ x: Int) -> Int {
+    // binary search for i where i = x/i
+    guard x != 0 else { return 0 }
+    var start = 1
+    var end = x
+    while start + 1 < end {
+        let middle = start + (end - start)/2
+        if middle == x/middle {
+            return middle
+        }
+        
+        if middle < x/middle {
+            start = middle
+        } else {
+            end = middle
+        }
+    }
+    return start
+}
 
+// Problem: product of array except self https://leetcode.com/problems/product-of-array-except-self/description/
+func productExceptSelf(_ nums: [Int]) -> [Int] {
+    let count = nums.count
+    var result = [Int]()
+    result.append(1)
+    
+    for i in 1..<count {
+        result.append(result[i-1] * nums[i-1])
+    }
+    
+    var right = 1
+    for i in stride(from: count - 1, to: -1, by: -1) {
+        print(i)
+        result[i] *= right
+        right *= nums[i]
+    }
+    return result
+}
