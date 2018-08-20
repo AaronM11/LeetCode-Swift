@@ -217,4 +217,15 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
     return components
 }
 
+// Problem: Implement strStr().
+// Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+// s/o https://leetcode.com/yy929058/ for the clean sollution after my crazy one.
+func strStr(_ haystack: String, _ needle: String) -> Int {
+    guard needle.count != 0 else { return 0 }
+    if let range = haystack.range(of: needle) {
+        return haystack.distance(from: haystack.startIndex, to: range.lowerBound)
+    }
+    return -1
+}
+
 
