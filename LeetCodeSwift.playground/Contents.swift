@@ -267,3 +267,58 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
     }
     return result
 }
+
+// Problem: https://leetcode.com/problems/max-increase-to-keep-city-skyline/description/
+func maxIncreaseKeepingSkyline(_ grid: [[Int]]) -> Int {
+    var increased = 0
+    var topBottomSkyline = Array(repeating: 0, count: grid.count)
+    var leftRightSkyline = Array(repeating: 0, count: grid[0].count)
+
+    for i in 0...(grid.count - 1) {
+        var leftRightMax = 0
+        var topBottomMax = 0
+
+        for j in 0...(grid[i].count - 1) {
+            let leftRightTemp = grid[i][j]
+            if leftRightTemp > leftRightMax  {
+                leftRightMax = leftRightTemp
+            }
+
+            let topBottomTemp = grid[j][i]
+            if topBottomTemp > topBottomMax {
+                topBottomMax = topBottomTemp
+            }
+        }
+        leftRightSkyline[i] = leftRightMax
+        topBottomSkyline[i] = topBottomMax
+    }
+    
+    // At this point we have the skyling. Loop through again, checking for the difference
+    // between grid[i][i] and the min of leftRightSkyline[i] and topBottomSkyline[i]
+    var count = 0
+    for i in 0...(grid.count - 1) {
+        for j in 0...(grid[i].count - 1) {
+            let temp = grid[i][j]
+            let increase = min(leftRightSkyline[i], topBottomSkyline[j]) - temp
+            if increase > 0 {
+                count += increase
+            }
+        }
+    }
+    
+    return count
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
