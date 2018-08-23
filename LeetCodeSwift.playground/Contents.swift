@@ -270,7 +270,6 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
 
 // Problem: https://leetcode.com/problems/max-increase-to-keep-city-skyline/description/
 func maxIncreaseKeepingSkyline(_ grid: [[Int]]) -> Int {
-    var increased = 0
     var topBottomSkyline = Array(repeating: 0, count: grid.count)
     var leftRightSkyline = Array(repeating: 0, count: grid[0].count)
 
@@ -309,7 +308,57 @@ func maxIncreaseKeepingSkyline(_ grid: [[Int]]) -> Int {
     return count
 }
 
+//Problem: Find all duplicated in an array
+// https://leetcode.com/problems/find-all-duplicates-in-an-array/description/
+// We know that elements in the array fall inthe range of 1 to n
+func findDuplicates(_ nums: [Int]) -> [Int] {
+    var counts = Array(repeating: 0, count: nums.count)
+    var duplicates = Array<Int>()
+    
+    for num in nums {
+        counts[num-1] += 1
+    }
+    print(counts)
+    
+    for (index, count) in counts.enumerated() {
+        if count == 2 {
+            duplicates.append(index + 1)
+        }
+    }
+    
+    return duplicates
+}
 
+//Problem: Queue reconstruction by height
+// https://leetcode.com/problems/queue-reconstruction-by-height/description/
+func reconstructQueue(_ people: [[Int]]) -> [[Int]] {
+    var persons = people
+    
+    persons.sort(by: {
+        if $0[0] == $1[0] {
+            return $0[1] <= $1[1]
+        }
+        return $1[0] < $0[0]
+    })
+    
+    var list = [[Int]]()
+    for person in persons {
+        if person[1] > list.count {
+            list.append(person)
+        } else {
+            list.insert(person, at: person[1])
+        }
+    }
+    
+    var result = Array(repeating: Array(repeating: 0, count: 2), count: people.count)
+    
+    var index = 0
+    for person in list {
+        result[index] = person
+        index += 1
+    }
+    return result
+}
 
 
 
