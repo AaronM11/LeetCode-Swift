@@ -254,7 +254,7 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
     let count = nums.count
     var result = [Int]()
     result.append(1)
-    
+
     for i in 1..<count {
         result.append(result[i-1] * nums[i-1])
     }
@@ -282,12 +282,13 @@ func maxIncreaseKeepingSkyline(_ grid: [[Int]]) -> Int {
             if leftRightTemp > leftRightMax  {
                 leftRightMax = leftRightTemp
             }
-
+            
             let topBottomTemp = grid[j][i]
             if topBottomTemp > topBottomMax {
                 topBottomMax = topBottomTemp
             }
         }
+        
         leftRightSkyline[i] = leftRightMax
         topBottomSkyline[i] = topBottomMax
     }
@@ -360,14 +361,64 @@ func reconstructQueue(_ people: [[Int]]) -> [[Int]] {
     return result
 }
 
+//Problem: Given a list of temperatures produce a list that will tell you how many days
+//you would have to wait until a warmer temperature.
+// https://leetcode.com/problems/daily-temperatures/description/
+func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
+    var stack = [Int]()
+    var days = Array(repeating: 0, count: temperatures.count)
+    
+    if temperatures.count == 0 {
+        return days
+    }
+    
+    for i in stride(from: temperatures.count - 1, to: -1, by: -1) {
+        var index = 0
+        
+        while !stack.isEmpty && temperatures[i] >= temperatures[stack.last ?? 0] {
+            stack.removeLast()
+        }
+        
+        if !stack.isEmpty {
+            index = (stack.last ?? 0) - i
+        }
+        
+        stack.append(i)
+        days[i] = index
+    }
+    
+    return days
+}
 
+// Problem. Given n, find the combinations of well formed parenthesis made by n sets
+// of prenthesis.
+// https://leetcode.com/problems/generate-parentheses/description/
+func generateParenthesis(_ n: Int) -> [String] {
+    var parenthesis = [String]()
+    if n <= 0 {
+        return parenthesis
+    }
+    
+    parenthesisHelper("", leftRemaining: n, rightRemaining: 0, &parenthesis)
+    return parenthesis
+}
 
+func parenthesisHelper(_ currentString: String, leftRemaining: Int, rightRemaining: Int, _ parenthesis: inout [String]) {
+    
+    if leftRemaining == 0 && rightRemaining == 0 {
+        parenthesis.append(currentString)
+        return
+    }
+    
+    if leftRemaining > 0 {
+        parenthesisHelper("\(currentString)(", leftRemaining: leftRemaining - 1, rightRemaining: rightRemaining + 1, &parenthesis)
+    }
+    
+    if rightRemaining > 0 {
+        parenthesisHelper("\(currentString))", leftRemaining: leftRemaining , rightRemaining: rightRemaining - 1, &parenthesis)
+    }
+    
+}
 
-
-
-
-
-
-
-
-
+let parenethis = generateParenthesis(3)
+print(parenethis)
