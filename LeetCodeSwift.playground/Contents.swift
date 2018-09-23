@@ -458,3 +458,30 @@ func swapPairs(_ head: ListNode?) -> ListNode? {
     }
     return dummyHead.next
 }
+
+// Problem: Find peak element.
+// A peak element is an element larger than its left and right neighbors
+// imagine nums[-1] and nums[nums.count] == - infinity.
+func findPeakElement(_ nums: [Int]) -> Int {
+    //binary search for en element that is a peak
+    var min = 0
+    var max = nums.count - 1
+    while min <= max {
+        var middle = (min + max) / 2
+        
+        let leftLessThan = middle - 1 < 0 || nums[middle-1] < nums[middle]
+        let rightLessThan = middle + 1 > max || nums[middle + 1] < nums[middle]
+        if leftLessThan && rightLessThan {
+            return middle
+        }
+        
+        if !leftLessThan {
+            max = middle - 1
+        } else {
+            min = middle + 1
+        }
+        
+    }
+    
+    return -1
+}
