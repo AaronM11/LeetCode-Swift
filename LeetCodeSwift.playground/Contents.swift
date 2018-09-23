@@ -45,6 +45,8 @@ func printList(_ list: ListNode?) {
 var listOne: ListNode? = ListNode(1)
 listOne?.next = ListNode(2)
 listOne?.next?.next = ListNode(3)
+listOne?.next?.next?.next = ListNode(4)
+listOne?.next?.next?.next?.next = ListNode(5)
 
 var listTwo: ListNode? = ListNode(1)
 listTwo?.next = ListNode(3)
@@ -417,8 +419,42 @@ func parenthesisHelper(_ currentString: String, leftRemaining: Int, rightRemaini
     if rightRemaining > 0 {
         parenthesisHelper("\(currentString))", leftRemaining: leftRemaining , rightRemaining: rightRemaining - 1, &parenthesis)
     }
-    
 }
 
-let parenethis = generateParenthesis(3)
-print(parenethis)
+// Problem: Given a set of distint integers, return all possible subsets (the power set)
+// https://leetcode.com/problems/subsets/description/
+func subsets(_ nums: [Int]) -> [[Int]] {
+    
+    var results = [[Int]]()
+    results.append([])
+    for num in nums {
+        for var subset in results {
+            subset.append(num)
+            results.append(subset)
+        }
+    }
+
+    return results
+}
+
+// Problem: Swap nodes in pairs. Given a linked list, swap every two adjacent nodes and return its head.
+// Example: [1,2,3,4] -> [2,1,4,3]
+// https://leetcode.com/problems/swap-nodes-in-pairs/description/
+func swapPairs(_ head: ListNode?) -> ListNode? {
+    var count = 0
+    let dummyHead = ListNode(0)
+    var current = head
+    dummyHead.next = current
+    
+    while let curr = current,
+        let next = curr.next {
+        count += 1
+        if count % 2 != 0 {
+            let tempVal = curr.val
+            curr.val = next.val
+            next.val = tempVal
+        }
+        current = current?.next
+    }
+    return dummyHead.next
+}
