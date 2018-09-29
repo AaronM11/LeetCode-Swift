@@ -256,14 +256,13 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
     let count = nums.count
     var result = [Int]()
     result.append(1)
-
+    
     for i in 1..<count {
         result.append(result[i-1] * nums[i-1])
     }
     
     var right = 1
     for i in stride(from: count - 1, to: -1, by: -1) {
-        print(i)
         result[i] *= right
         right *= nums[i]
     }
@@ -467,7 +466,7 @@ func findPeakElement(_ nums: [Int]) -> Int {
     var min = 0
     var max = nums.count - 1
     while min <= max {
-        var middle = (min + max) / 2
+        let middle = (min + max) / 2
         
         let leftLessThan = middle - 1 < 0 || nums[middle-1] < nums[middle]
         let rightLessThan = middle + 1 > max || nums[middle + 1] < nums[middle]
@@ -485,3 +484,11 @@ func findPeakElement(_ nums: [Int]) -> Int {
     
     return -1
 }
+
+// Problem: Game of life
+// https://leetcode.com/problems/game-of-life/description/
+func gameOfLife(_ board: inout [[Int]]) {
+    let number = board[0][0]
+    
+}
+
